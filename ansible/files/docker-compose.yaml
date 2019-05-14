@@ -1,0 +1,18 @@
+version: '3'
+services:
+  nginx:
+    build: ./nginx
+    container_name: nginx-gateway
+    ports:
+      - 80:80
+      - 443:443
+  ekercode-cms:
+    image: registry.cn-shanghai.aliyuncs.com/ekercode/ekercode-cms
+    container_name: ekercode-cms
+  
+  ekercode-mobile:
+    image: registry.cn-shanghai.aliyuncs.com/ekercode/ekercode-mobile
+    container_name: ekercode-mobile
+
+volumes:
+  data:

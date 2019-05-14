@@ -1,0 +1,24 @@
+---
+- hosts: ["all"]
+  remote_user: ea-cat
+  become: yes
+  roles:
+    - role: andrewrothstein.docker-compose
+  tasks:
+    - name: create directory to store docker-compose.yaml
+      become_user: ea-cat
+      file:
+        path: ~/ekercode
+        state: directory
+    - name: copy docker-compose.yaml
+      become_user: ea-cat
+      copy:
+        src: ./files/
+        dest: ~/ekercode/
+    - name: run services defined in docker-compose.yaml
+      become: yes
+      become_method: sudo
+      shell: |
+        docker-compose up -d --build
+      args:
+        chdir: /home/ea-cat/ekercode
